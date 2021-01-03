@@ -1,3 +1,3 @@
 # Review of R, Using Open Source Resources to Rebuild Knowledge
 
-sd
+test again, trying not to put in credentials every time I push
