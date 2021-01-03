@@ -1,1 +1,2 @@
-# personal_R
+# Review of R, Using Open Source Resources to Rebuild Knowledge
+

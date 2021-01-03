@@ -1,0 +1,26 @@
+---
+title: "Review of R and Tidy Data"
+output: html_document
+theme: united
+editor options:
+  chunk_output_type: console
+---
+
+```{r setup, include =FALSE}
+library (tidyverse)
+```
+
+# Honor to Hadley Wickham
+The only reason I'm able to create this document here today is because of the father of tidydata and developer of the tidyverse. It's a great privilege to be alive at the same time as such an honorable and knowledgeable figure, Hadley Wickham. He has 
+
+### What is Tidy Data?
+
+
+
+I'm first going to recreate a dummy .csv dataset that Wickham
+
+```{r}
+classroom <- data.frame("name"=c("Billy","Suzy","Lionel","Jenny"),"quiz1"=c(NA,"F","B","A"),"quiz2"=c("D",NA,"C","A"),"test1"=c("C",NA,"B","B"))
+                                                  
+classroom
+```
