@@ -1,0 +1,104 @@
+---
+title: "Review of R and Tidy Data"
+author: "Molly Miraglia"
+output: html_document
+theme: united
+editor options:
+  chunk_output_type: console
+---
+
+```{r setup, include =FALSE}
+library (tidyverse)
+library(png)
+tidy_img_path <- "images/tidy-1.png"
+```
+
+# Purpose of This R Markdown
+This is a personal .rmd to help me relearn some concepts and techniques in R. Information is rewritten and paraphrased for my own personal comprehension. Others can follow along if they would like. I do not own any concepts or ideas found in this .rmd.
+
+## Honor to Hadley Wickham
+The only reason I'm able to create this document is because of the father and developer of the tidyverse. It's a great privilege to be alive at the same time as such an honorable and knowledgeable figurehead, Hadley Wickham. He has revolutionized data analysis, no longer making us "reinvent the wheel", rather than he took the wheel and kept it in place. All resources from this R Markdown come from Tidy Data (2014).
+
+Wickham, H. (2014). Tidy Data. Journal of Statistical Software, 59(10), 1 - 23. doi:http://dx.doi.org/10.18637/jss.v059.i10
+
+##### Follow Hadley Wickham on Twitter: @hadleywickham
+
+### What is Tidy Data?
+
+There are three rules to make a tidy dataset.
+![There are three rules to make a tidy dataset.](images/tidy-1.png)
+1. Each variable has its own column  
+2. Each observation has its own row  
+3. Each value has its own cell
+
+A dataset is a collection of values, with values belonging to a variable and observation.
+
+#### How do we abide by these rules?
+
+I'm first going to recreate a dummy .csv data set that Wickham used early in his paper. 
+
+```{r}
+classroom <- data.frame("name"=c("Billy","Suzy","Lionel","Jenny"),"quiz1"=c(NA,"F","B","A"),"quiz2"=c("D",NA,"C","A"),"test1"=c("C",NA,"B","B"))
+                                                  
+classroom
+```
+We will be tidying this data based on the rules above.  
+
+The functions I was taught when initially learning the tidyverse were gather() and spread(). However, these functions are no longer updated and in active development, so essentially these are dead functions. Newer functions have come to replace these. pivot_longer() is now equivalent to gather() and pivot_wider() is equivalent to spread(). These functions are great for working with key-value pairs. A key-value pair are variables that are linked together. The key is the identifier and the value is what the identifier can or is equal to. For example, using the classroom dataframe above: name:Billy, name:Suzy, quiz1:F  
+
+According to R Documentation, gather() takes multiple columns and collapses them into key-value pairs. But pivot_longer() essentially increases the number of rows and decreases the number of columns. spread() is used to spread a key-value pair across multiple columns. pivot_wider() replaces this function by "widening" data. An example of spread() can be seen below.
+
+![An example of spread(), with also examples of "longer" and "wider" data.](images/spread_data_R.png)
+Something my previous research professor drilled into me was, work in small  increments and always print! This technique has helped me so much while beginning to learn proper programmming. This technique also provides bug-free code down the line! So, I will be following Wickham's example from his paper in increments!
+
+##### Beloved previous research professor: @stephspiel on Twitter!
+
+```{r}
+classroom
+# Code to start tidying df, using dplyr and tidyr functions!
+classroom2 <- classroom %>%
+  pivot_longer(quiz1:test1,names_to="assessment",values_to="grade") 
+  
+classroom2
+```
+In this instance, the pivot_longer() function combined all of the columns from quiz1 through test 1, and put them in their own row, labeled "assessment". Then took the values of all the combined columns, and matched them accordingly, within their own column, labeled "grade". Let's move on. 
+
+```{r}
+classroom2
+classroom2 %>%
+  arrange()
+```
+The arrange() function was used to sort variables in descending order.
+
+And just with two functions, we were able to tidy the data! However, this dataset was incredibily simple, and had clear indications of what the observations, values, and variables would be. The variables of this situation were the names, assessments, and grades. All combinations of each name and assessment was an observation with the grade being the value. The tidied version of the dataset is way easier to graph. 
+
+<!-- ```{r, fig.width=3, fig.height=3} -->
+<!-- classroom %>% -->
+<!--   ggplot(aes(x="name",y="quiz1")) + -->
+<!--   geom_jitter() -->
+
+<!--   ggplot(subset(classroom2, assessment %in% "quiz1") , aes(x="assessment",y="grade"))+ -->
+<!--     geom_jitter() -->
+
+<!-- ``` -->
+
+<!-- These two figures in general, are pretty poor. They take time to explain, which is not the purpose of a figure at all. However, I'm just using them to demonstrate how a poor data frame can make your figures ugly and non-sensical. The `classroom` figure plots quiz1 against name. There are no values on the actual graph, but it represents that there are four variables, receiving a grade. However, this graph didn't plot correctly, as all four name observations did not receive the same grade for quiz1. However, if you look at the `classroom2` figure, the grade is plotted against the assessment, quiz1. This figure also has no values, yet is more correct than the `classroom` figure, as it plots all the points at different coordinates, because 
+I stopped writing this because geom_jitter() changes the plot every time it's knitted. I'll find a better way to graph later.-->
+
+I'm skipping ahead of myself a little bit. But let's move on to the most complicated form of messy data. This dataset is towards the end of Wickham's paper, where variables are stored in rows and columns. Let's take a look!
+
+```{r}
+weather <- read_csv(file="weather.csv")
+weather
+```
+
+There are way too many columns for this dataset. Let's use pivot_longer() to fix that.
+
+```{r}
+weather2 <- weather %>% 
+  pivot_longer(
+    d1:d31, 
+    names_to = "day", 
+    values_to = "value", 
+    values_drop_na = TRUE )
+```
