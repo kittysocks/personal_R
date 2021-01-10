@@ -482,6 +482,50 @@ classroom2</code></pre>
 <!-- ``` -->
 <!-- These two figures in general, are pretty poor. They take time to explain, which is not the purpose of a figure at all. However, I'm just using them to demonstrate how a poor data frame can make your figures ugly and non-sensical. The `classroom` figure plots quiz1 against name. There are no values on the actual graph, but it represents that there are four variables, receiving a grade. However, this graph didn't plot correctly, as all four name observations did not receive the same grade for quiz1. However, if you look at the `classroom2` figure, the grade is plotted against the assessment, quiz1. This figure also has no values, yet is more correct than the `classroom` figure, as it plots all the points at different coordinates, because 
 I stopped writing this because geom_jitter() changes the plot every time it's knitted. I'll find a better way to graph later.-->
+<p>I’m skipping ahead of myself a little bit. But let’s move on to the most complicated form of messy data. This dataset is towards the end of Wickham’s paper, where variables are stored in rows and columns. Let’s take a look!</p>
+<pre class="r"><code>weather &lt;- read_csv(file=&quot;weather.csv&quot;)</code></pre>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   .default = col_double(),
+##   id = col_character(),
+##   element = col_character(),
+##   d9 = col_logical(),
+##   d12 = col_logical(),
+##   d18 = col_logical(),
+##   d19 = col_logical(),
+##   d20 = col_logical(),
+##   d21 = col_logical(),
+##   d22 = col_logical(),
+##   d24 = col_logical()
+## )
+## i Use `spec()` for the full column specifications.</code></pre>
+<pre class="r"><code>weather</code></pre>
+<pre><code>## # A tibble: 22 x 35
+##    id     year month element    d1    d2    d3    d4    d5    d6    d7    d8
+##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 MX17~  2010     1 tmax       NA  NA    NA      NA  NA      NA    NA    NA
+##  2 MX17~  2010     1 tmin       NA  NA    NA      NA  NA      NA    NA    NA
+##  3 MX17~  2010     2 tmax       NA  27.3  24.1    NA  NA      NA    NA    NA
+##  4 MX17~  2010     2 tmin       NA  14.4  14.4    NA  NA      NA    NA    NA
+##  5 MX17~  2010     3 tmax       NA  NA    NA      NA  32.1    NA    NA    NA
+##  6 MX17~  2010     3 tmin       NA  NA    NA      NA  14.2    NA    NA    NA
+##  7 MX17~  2010     4 tmax       NA  NA    NA      NA  NA      NA    NA    NA
+##  8 MX17~  2010     4 tmin       NA  NA    NA      NA  NA      NA    NA    NA
+##  9 MX17~  2010     5 tmax       NA  NA    NA      NA  NA      NA    NA    NA
+## 10 MX17~  2010     5 tmin       NA  NA    NA      NA  NA      NA    NA    NA
+## # ... with 12 more rows, and 23 more variables: d9 &lt;lgl&gt;, d10 &lt;dbl&gt;, d11 &lt;dbl&gt;,
+## #   d12 &lt;lgl&gt;, d13 &lt;dbl&gt;, d14 &lt;dbl&gt;, d15 &lt;dbl&gt;, d16 &lt;dbl&gt;, d17 &lt;dbl&gt;,
+## #   d18 &lt;lgl&gt;, d19 &lt;lgl&gt;, d20 &lt;lgl&gt;, d21 &lt;lgl&gt;, d22 &lt;lgl&gt;, d23 &lt;dbl&gt;,
+## #   d24 &lt;lgl&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;, d28 &lt;dbl&gt;, d29 &lt;dbl&gt;,
+## #   d30 &lt;dbl&gt;, d31 &lt;dbl&gt;</code></pre>
+<p>There are way too many columns for this dataset. Let’s use pivot_longer() to fix that.</p>
+<pre class="r"><code>weather2 &lt;- weather %&gt;% 
+  pivot_longer(
+    d1:d31, 
+    names_to = &quot;day&quot;, 
+    values_to = &quot;value&quot;, 
+    values_drop_na = TRUE )</code></pre>
 </div>
 </div>
 </div>
