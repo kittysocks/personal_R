@@ -1,0 +1,36 @@
+--- 
+title: "Learn Tidy Data!"
+author: "Molly Miraglia"
+output: html_document
+theme: united
+editor options:
+  chunk_output_type: console
+---
+
+```{r setup, include =FALSE}
+library (tidyverse)
+library(png)
+```
+
+## Why 
+
+### What is Tidy Data?
+
+There are three rules to make a tidy dataset.
+
+1. Each variable has its own column  
+2. Each observation has its own row  
+3. Each value has its own cell
+![There are three rules to make a tidy dataset.](images/tidy-1.png)  
+
+A column of data goes vertically and a row goes horizontally. Variables tend to be in columns and observations tend to be in rows. A variable is an attribute of an observation, with observations being a measurement of the variable. For the example observed in the above image, we can see that this data set focuses on disease cases of different countries of varying populations from different years. The variables of the example are `country`, `year`, `cases`, and `population`, and they all have their own columns. Within each column, each observation has its own value, with some of the values being the same. However, the value `Afghanistan` cannot be in its own column because it is not an attribute of any of the data except its own. An untidy data set of the above example would look something like this. 
+
+```{r}
+disease <- data.frame("country"=c("Afghanistan","Afghanistan","Brazil","Brazil","China","China"),"year"=c("1999","2000"),"type"=c("cases","populations"),
+                      "count"=c(745,19987071,2666,20595360,37737,172006362))
+disease
+```
+This is
+
+
+Contingency tables
