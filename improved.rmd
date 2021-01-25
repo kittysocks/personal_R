@@ -1,8 +1,10 @@
 --- 
 title: "Learn Tidy Data!"
 author: "Molly Miraglia"
-output: html_document
-theme: united
+output:
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
 editor options:
   chunk_output_type: console
 ---
