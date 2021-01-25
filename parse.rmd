@@ -43,16 +43,16 @@ There are so many modules that can help you achieve what you need, but first thi
 
 Introducing split() and .strip(). These two methods are essential in parsing a text file. These methods are used in text parsing when they retain to a string, not a byte.
 
-According to the official [Python Documentation](https://docs.python.org/), .split() returns a list based on the delimiter provided. 
-
-
+According to the official Python Documentation, .split() returns a list based on the delimiter provided. Let's do an example!
 
 ```{python}
 
-import pandas
+str1 = "A,B,23,F" 
 
+str1.split(",")
 
 ```
+You can see that the .split() method took 
 
 ## Resources
 
